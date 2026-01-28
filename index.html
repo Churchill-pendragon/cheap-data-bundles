@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Cheap Data Bundles</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #fff8d6;
+      margin: 0;
+      padding: 0;
+    }
+
+    .header {
+      background: #ffcc00;
+      padding: 20px;
+      text-align: center;
+      color: #000;
+      font-weight: bold;
+      font-size: 22px;
+    }
+
+    .container {
+      max-width: 430px;
+      margin: 20px auto;
+      padding: 15px;
+    }
+
+    .info {
+      background: #fff;
+      padding: 15px;
+      border-radius: 10px;
+      margin-bottom: 20px;
+      font-size: 14px;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+    }
+
+    .info p {
+      margin: 6px 0;
+    }
+
+    .card {
+      background: white;
+      padding: 18px;
+      border-radius: 12px;
+      margin-bottom: 15px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.12);
+      border-left: 6px solid #ffcc00;
+    }
+
+    .card h2 {
+      margin: 0;
+      font-size: 18px;
+      color: #000;
+    }
+
+    .price {
+      font-size: 20px;
+      color: #ff9900;
+      margin: 10px 0;
+      font-weight: bold;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      font-size: 14px;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      border: none;
+      background: #ffcc00;
+      color: #000;
+      font-size: 16px;
+      font-weight: bold;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #ffb700;
+    }
+
+    .footer {
+      text-align: center;
+      font-size: 13px;
+      color: #555;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    📶 CHEAP DATA BUNDLES (MTN)
+  </div>
+
+  <div class="container">
+
+    <div class="info">
+      <p>📱 <strong>Network:</strong> MTN only</p>
+      <p>💰 <strong>Pay via Mobile Money:</strong> 0530083785</p>
+      <p>📩 <strong>After payment, contact me using this same number</strong></p>
+      <p>⏱️ <strong>Delivery time:</strong> 5 – 40 minutes</p>
+    </div>
+
+    <div class="card">
+      <h2>1GB Data</h2>
+      <p class="price">GH₵ 5.00</p>
+      <input type="text" placeholder="Enter MTN number" id="p1">
+      <button onclick="buy('1GB', 'GH₵ 5.00', p1.value)">Buy Now</button>
+    </div>
+
+    <div class="card">
+      <h2>2GB Data</h2>
+      <p class="price">GH₵ 9.50</p>
+      <input type="text" placeholder="Enter MTN number" id="p2">
+      <button onclick="buy('2GB', 'GH₵ 9.50', p2.value)">Buy Now</button>
+    </div>
+
+    <div class="card">
+      <h2>3GB Data</h2>
+      <p class="price">GH₵ 14.50</p>
+      <input type="text" placeholder="Enter MTN number" id="p3">
+      <button onclick="buy('3GB', 'GH₵ 14.50', p3.value)">Buy Now</button>
+    </div>
+
+    <div class="card">
+      <h2>4GB Data</h2>
+      <p class="price">GH₵ 19.50</p>
+      <input type="text" placeholder="Enter MTN number" id="p4">
+      <button onclick="buy('4GB', 'GH₵ 19.50', p4.value)">Buy Now</button>
+    </div>
+
+    <div class="card">
+      <h2>5GB Data</h2>
+      <p class="price">GH₵ 24.50</p>
+      <input type="text" placeholder="Enter MTN number" id="p5">
+      <button onclick="buy('5GB', 'GH₵ 24.50', p5.value)">Buy Now</button>
+    </div>
+
+    <div class="card">
+      <h2>10GB Data</h2>
+      <p class="price">GH₵ 45.00</p>
+      <input type="text" placeholder="Enter MTN number" id="p6">
+      <button onclick="buy('10GB', 'GH₵ 45.00', p6.value)">Buy Now</button>
+    </div>
+
+    <div class="card">
+      <h2>50GB Data</h2>
+      <p class="price">GH₵ 200.00</p>
+      <input type="text" placeholder="Enter MTN number" id="p7">
+      <button onclick="buy('50GB', 'GH₵ 200.00', p7.value)">Buy Now</button>
+    </div>
+
+    <div class="footer">
+      © Cheap Data Bundles • MTN Ghana
+    </div>
+
+  </div>
+
+  <script>
+    function buy(bundle, price, phoneNumber) {
+      if (phoneNumber.trim() === "") {
+        alert("Please enter the MTN phone number for data delivery.");
+        return;
+      }
+
+      const whatsappNumber = "233530083785";
+      const message =
+        "Hello, I want to buy " + bundle + " MTN data.\n\n" +
+        "Price: " + price + "\n" +
+        "Delivery number: " + phoneNumber + "\n\n" +
+        "I have made payment to 0530083785. Please confirm.";
+
+      window.open(
+        "https://wa.me/" + whatsappNumber + "?text=" + encodeURIComponent(message),
+        "_blank"
+      );
+    }
+  </script>
+
+</body>
+</html>
