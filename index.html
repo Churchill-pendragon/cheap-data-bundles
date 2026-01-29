@@ -1,40 +1,257 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Cheap Data Bundles</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<title>Cheap Data Bundles</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #fff8d6;
-      margin: 0;
-      padding: 0;
-    }
+<style>
+body{
+  font-family: Arial, sans-serif;
+  background:#fff8d6;
+  margin:0;
+}
 
-    .header {
-      background: #ffcc00;
-      padding: 22px;
-      text-align: center;
-      color: #000;
-      font-weight: 900;
-      font-size: 24px;
-      letter-spacing: 0.5px;
-    }
+.header{
+  background:#ffcc00;
+  padding:20px;
+  text-align:center;
+  font-size:24px;
+  font-weight:900;
+}
 
-    .container {
-      max-width: 460px;
-      margin: 20px auto;
-      padding: 15px;
-    }
+.container{
+  max-width:460px;
+  margin:20px auto;
+  padding:15px;
+}
 
-    /* BIG INFO BOX */
-    .info {
-      background: #000;
-      color: #ffcc00;
-      padding: 22px;
-      border-radius: 16px;
+/* INFO BOX */
+.info{
+  background:#000;
+  color:#ffcc00;
+  padding:20px;
+  border-radius:16px;
+  font-size:18px;
+  margin-bottom:25px;
+}
+
+.info h3{
+  text-align:center;
+  margin-top:0;
+  font-size:22px;
+}
+
+.warning{
+  background:#ffcc00;
+  color:#000;
+  padding:14px;
+  text-align:center;
+  font-weight:900;
+  border-radius:12px;
+  margin-top:15px;
+  animation:pulse 1.5s infinite;
+}
+
+@keyframes pulse{
+  0%{transform:scale(1)}
+  50%{transform:scale(1.04)}
+  100%{transform:scale(1)}
+}
+
+/* CARD */
+.card{
+  background:#fff;
+  padding:18px;
+  border-radius:14px;
+  margin-bottom:16px;
+  box-shadow:0 4px 12px rgba(0,0,0,0.15);
+  border-left:6px solid #ffcc00;
+  position:relative;
+}
+
+.badge{
+  position:absolute;
+  top:-10px;
+  right:-10px;
+  background:#ff0000;
+  color:#fff;
+  padding:6px 10px;
+  font-size:12px;
+  border-radius:10px;
+  font-weight:bold;
+}
+
+.price{
+  font-size:22px;
+  color:#ff9900;
+  font-weight:bold;
+}
+
+input{
+  width:100%;
+  padding:11px;
+  margin-top:10px;
+  border-radius:8px;
+  border:1px solid #ccc;
+  font-size:15px;
+}
+
+.checkbox{
+  margin-top:10px;
+  font-weight:bold;
+}
+
+button{
+  width:100%;
+  padding:14px;
+  margin-top:12px;
+  border:none;
+  background:#ffcc00;
+  color:#000;
+  font-size:17px;
+  font-weight:bold;
+  border-radius:10px;
+  cursor:pointer;
+}
+
+/* PROCESSING SCREEN */
+.processing{
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background:rgba(0,0,0,0.9);
+  color:#ffcc00;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  flex-direction:column;
+  z-index:999;
+}
+
+.loader{
+  border:6px solid #333;
+  border-top:6px solid #ffcc00;
+  border-radius:50%;
+  width:60px;
+  height:60px;
+  animation:spin 1s linear infinite;
+  margin-bottom:15px;
+}
+
+@keyframes spin{
+  0%{transform:rotate(0deg)}
+  100%{transform:rotate(360deg)}
+}
+
+/* REVIEWS */
+.reviews{
+  background:#fff;
+  padding:15px;
+  border-radius:12px;
+  margin-top:20px;
+  font-size:14px;
+}
+
+.review{
+  display:none;
+}
+
+.review.active{
+  display:block;
+}
+</style>
+</head>
+
+<body>
+
+<div class="header">📶 CHEAP DATA BUNDLES (MTN)</div>
+
+<div class="container">
+
+<div class="info">
+  <h3>IMPORTANT INFORMATION</h3>
+  <p>📱 Network: MTN ONLY</p>
+  <p>💰 Pay to: <strong>0530083785</strong></p>
+  <p>📩 Contact after payment</p>
+  <p>⏱ Delivery: 5 – 40 minutes</p>
+  <div class="warning">SEND MONEY BEFORE CLICKING BUY</div>
+</div>
+
+<div class="card">
+  <div class="badge">MOST POPULAR</div>
+  <h2>1GB Data</h2>
+  <p class="price">GH₵5.00</p>
+  <input id="num1" placeholder="Enter MTN number for delivery">
+  <div class="checkbox">
+    <input type="checkbox" id="chk1"> I have paid to 0530083785
+  </div>
+  <button onclick="startOrder('1GB','GH₵5.00','num1','chk1')">Buy Now</button>
+</div>
+
+<div class="reviews">
+  <div class="review active">⭐⭐⭐⭐⭐ Fast delivery, got my data in 10 minutes</div>
+  <div class="review">⭐⭐⭐⭐ Reliable seller, no issues</div>
+  <div class="review">⭐⭐⭐⭐⭐ Best cheap data vendor</div>
+</div>
+
+</div>
+
+<div class="processing" id="processing">
+  <div class="loader"></div>
+  <h2>Processing your order...</h2>
+</div>
+
+<script>
+let reviewIndex=0;
+setInterval(()=>{
+  const reviews=document.querySelectorAll('.review');
+  reviews.forEach(r=>r.classList.remove('active'));
+  reviewIndex=(reviewIndex+1)%reviews.length;
+  reviews[reviewIndex].classList.add('active');
+},3000);
+
+function startOrder(bundle,price,numId,chkId){
+  const phone=document.getElementById(numId).value.trim();
+  const paid=document.getElementById(chkId).checked;
+
+  if(phone===""){
+    alert("Please enter the delivery MTN number.");
+    return;
+  }
+  if(!paid){
+    alert("Please confirm that you have paid.");
+    return;
+  }
+
+  document.getElementById('processing').style.display="flex";
+
+  const orderId="MTN-"+Math.floor(10000+Math.random()*90000);
+
+  setTimeout(()=>{
+    const message=
+`Hello, I want to buy ${bundle} MTN data.
+
+Order ID: ${orderId}
+Price: ${price}
+Delivery Number: ${phone}
+
+I have sent the money to 0530083785.`;
+
+    window.open(
+      "https://wa.me/233530083785?text="+encodeURIComponent(message),
+      "_blank"
+    );
+
+    document.getElementById('processing').style.display="none";
+  },2000);
+}
+</script>
+
+</body>
+</html>      border-radius: 16px;
       margin-bottom: 24px;
       font-size: 17px;
       box-shadow: 0 6px 18px rgba(0,0,0,0.3);
@@ -224,3 +441,4 @@
 
 </body>
 </html>
+
