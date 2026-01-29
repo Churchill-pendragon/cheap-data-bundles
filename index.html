@@ -1,252 +1,171 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>Churchill’s Data Hub</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
+  <title>Churchill’s Data Hub</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<style>
-body{
-  margin:0;
-  font-family:Arial, sans-serif;
-  background:#fff4cc;
-}
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: #f2f2f2;
+      color: #111;
+    }
 
-.header{
-  background:#ffcc00;
-  text-align:center;
-  padding:18px;
-  font-size:22px;
-  font-weight:bold;
-}
+    header {
+      background: #000;
+      color: #fff;
+      padding: 15px;
+      text-align: center;
+      font-size: 20px;
+      font-weight: bold;
+    }
 
-.container{
-  max-width:480px;
-  margin:0 auto;
-  padding:15px;
-}
+    .info-banner {
+      background: #111;
+      color: #fff;
+      padding: 15px;
+      margin: 15px;
+      border-radius: 6px;
+      font-size: 14px;
+      line-height: 1.6;
+    }
 
-.info{
-  background:#000;
-  color:#ffcc00;
-  padding:15px;
-  border-radius:8px;
-  font-size:14px;
-  line-height:1.7;
-}
+    .info-banner a {
+      color: #25D366;
+      text-decoration: none;
+      font-weight: bold;
+    }
 
-.alert{
-  background:#ffcc00;
-  color:#000;
-  font-weight:bold;
-  text-align:center;
-  padding:10px;
-  border-radius:6px;
-  margin-top:10px;
-}
+    .container {
+      padding: 15px;
+    }
 
-.card{
-  background:#fff;
-  margin-top:15px;
-  padding:15px;
-  border-radius:10px;
-  box-shadow:0 0 5px rgba(0,0,0,0.15);
-}
+    .bundle {
+      background: #fff;
+      padding: 15px;
+      margin-bottom: 15px;
+      border-radius: 6px;
+      box-shadow: 0 0 5px rgba(0,0,0,0.1);
+    }
 
-.price{
-  color:#ff9900;
-  font-size:20px;
-  font-weight:bold;
-}
+    .bundle h3 {
+      margin: 0 0 5px 0;
+    }
 
-.badge{
-  font-size:12px;
-  padding:3px 6px;
-  color:#fff;
-  border-radius:4px;
-  margin-left:6px;
-}
+    .price {
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
 
-.hot{background:orange;}
-.family{background:red;}
+    input[type="tel"] {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 8px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      font-size: 15px;
+    }
 
-input{
-  width:100%;
-  padding:10px;
-  margin-top:10px;
-  font-size:16px;
-}
+    .checkbox {
+      font-size: 14px;
+      margin-bottom: 10px;
+    }
 
-.check{
-  margin-top:8px;
-  font-size:14px;
-}
+    button {
+      width: 100%;
+      padding: 12px;
+      background: #000;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      font-size: 16px;
+      cursor: pointer;
+    }
 
-button{
-  width:100%;
-  padding:12px;
-  margin-top:10px;
-  background:#ffcc00;
-  border:none;
-  font-size:16px;
-  font-weight:bold;
-  cursor:pointer;
-}
+    button:hover {
+      background: #333;
+    }
 
-button:disabled{
-  background:#ccc;
-  cursor:not-allowed;
-}
-
-.footer{
-  text-align:center;
-  font-size:12px;
-  margin:20px 0;
-}
-
-/* WhatsApp Floating */
-.whatsapp{
-  position:fixed;
-  bottom:20px;
-  right:20px;
-  width:60px;
-  height:60px;
-  background:#25D366;
-  border-radius:50%;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-}
-
-.whatsapp img{
-  width:34px;
-}
-</style>
+    footer {
+      text-align: center;
+      padding: 15px;
+      font-size: 13px;
+      color: #666;
+    }
+  </style>
 </head>
 
 <body>
 
-<div class="header">📶 Churchill’s Data Hub (MTN)</div>
+<header>
+  Churchill’s Data Hub
+</header>
+
+<div class="info-banner">
+  📶 Network: MTN <br>
+  📱 Mobile Money / WhatsApp: <b>0530083785</b><br>
+  👤 MoMo Name: <b>Stephen Morken</b><br><br>
+
+  ⏱️ Delivery time: 5 – 40 minutes<br>
+  ⚠️ If delivery exceeds 1 hour, please contact us.<br><br>
+
+  📢 Join our WhatsApp Channel for updates:<br>
+  👉 <a href="https://whatsapp.com/channel/0029Vb6zWq8ISTkJr4tJeA0j" target="_blank">
+     Click here to join
+     </a>
+</div>
 
 <div class="container">
 
-<div class="info">
-📱 <b>Network:</b> MTN ONLY<br>
-💰 <b>Mobile Money / WhatsApp:</b> 0530083785<br>
-👤 <b>Name:</b> Stephen Morken<br>
-⏱ <b>Delivery time:</b> 5 – 40 minutes<br>
-⚠ <b>If delivery exceeds 1 hour, contact us immediately.</b><br><br>
-After payment, contact us using the same number.
-</div>
+  <!-- 4GB -->
+  <div class="bundle">
+    <h3>4GB Data</h3>
+    <div class="price">₵19.50</div>
 
-<div class="alert">⚠ SEND MONEY FIRST BEFORE CLICKING BUY</div>
+    <input type="tel" placeholder="Enter MTN number">
 
-<!-- 1GB -->
-<div class="card">
-<b>1GB Data</b> <span class="badge hot">🔥 HOT</span><br>
-<div class="price">GH₵ 5.00</div>
-<input type="tel" placeholder="Enter MTN number" id="n1">
-<div class="check">
-<input type="checkbox" id="c1" onchange="toggle(1)"> I have sent payment
-</div>
-<button id="b1" disabled onclick="buy('1GB','n1')">Buy Now</button>
-</div>
+    <div class="checkbox">
+      <input type="checkbox"> I confirm the number is correct
+    </div>
 
-<!-- 2GB -->
-<div class="card">
-<b>2GB Data</b><br>
-<div class="price">GH₵ 9.50</div>
-<input type="tel" placeholder="Enter MTN number" id="n2">
-<div class="check">
-<input type="checkbox" id="c2" onchange="toggle(2)"> I have sent payment
-</div>
-<button id="b2" disabled onclick="buy('2GB','n2')">Buy Now</button>
-</div>
+    <button>Buy Now</button>
+  </div>
 
-<!-- 3GB -->
-<div class="card">
-<b>3GB Data</b> <span class="badge hot">🔥 HOT</span><br>
-<div class="price">GH₵ 14.50</div>
-<input type="tel" placeholder="Enter MTN number" id="n3">
-<div class="check">
-<input type="checkbox" id="c3" onchange="toggle(3)"> I have sent payment
-</div>
-<button id="b3" disabled onclick="buy('3GB','n3')">Buy Now</button>
-</div>
+  <!-- 5GB -->
+  <div class="bundle">
+    <h3>5GB Data</h3>
+    <div class="price">₵24.50</div>
 
-<!-- 4GB -->
-<div class="card">
-<b>4GB Data</b><br>
-<div class="price">GH₵ 19.50</div>
-<input type="tel" placeholder="Enter MTN number" id="n4">
-<div class="check">
-<input type="checkbox" id="c4" onchange="toggle(4)"> I have sent payment
-</div>
-<button id="b4" disabled onclick="buy('4GB','n4')">Buy Now</button>
-</div>
+    <input type="tel" placeholder="Enter MTN number">
 
-<!-- 5GB -->
-<div class="card">
-<b>5GB Data</b><br>
-<div class="price">GH₵ 24.50</div>
-<input type="tel" placeholder="Enter MTN number" id="n5">
-<div class="check">
-<input type="checkbox" id="c5" onchange="toggle(5)"> I have sent payment
-</div>
-<button id="b5" disabled onclick="buy('5GB','n5')">Buy Now</button>
-</div>
+    <div class="checkbox">
+      <input type="checkbox"> I confirm the number is correct
+    </div>
 
-<!-- 10GB -->
-<div class="card">
-<b>10GB Data</b><br>
-<div class="price">GH₵ 45.00</div>
-<input type="tel" placeholder="Enter MTN number" id="n10">
-<div class="check">
-<input type="checkbox" id="c10" onchange="toggle(10)"> I have sent payment
-</div>
-<button id="b10" disabled onclick="buy('10GB','n10')">Buy Now</button>
-</div>
+    <button>Buy Now</button>
+  </div>
 
-<!-- 50GB -->
-<div class="card">
-<b>50GB Data</b> <span class="badge family">FAMILY PACKAGE</span><br>
-<div class="price">GH₵ 200</div>
-<input type="tel" placeholder="Enter MTN number" id="n50">
-<div class="check">
-<input type="checkbox" id="c50" onchange="toggle(50)"> I have sent payment
-</div>
-<button id="b50" disabled onclick="buy('50GB','n50')">Buy Now</button>
-</div>
+  <!-- 10GB -->
+  <div class="bundle">
+    <h3>10GB Data</h3>
+    <div class="price">₵45.00</div>
+
+    <input type="tel" placeholder="Enter MTN number">
+
+    <div class="checkbox">
+      <input type="checkbox"> I confirm the number is correct
+    </div>
+
+    <button>Buy Now</button>
+  </div>
 
 </div>
 
-<div class="footer">© 2026 Churchill</div>
-
-<a class="whatsapp" href="https://wa.me/233530083785" target="_blank">
-<img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg">
-</a>
-
-<script>
-function toggle(id){
-  document.getElementById("b"+id).disabled =
-  !document.getElementById("c"+id).checked;
-}
-
-function buy(bundle,inputId){
-  const num = document.getElementById(inputId).value;
-  if(!num){ alert("Enter MTN number"); return; }
-
-  const ref = "CDH" + Math.floor(Math.random()*100000);
-
-  const msg = `Hello Churchill’s Data Hub,
-I have paid for ${bundle}.
-MTN Number: ${num}
-Order ID: ${ref}`;
-
-  window.location.href =
-  "https://wa.me/233530083785?text="+encodeURIComponent(msg);
-}
-</script>
+<footer>
+  © 2026 Churchill
+</footer>
 
 </body>
 </html>
