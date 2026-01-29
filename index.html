@@ -2,25 +2,27 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Churchill’s Data Hub – Cheap MTN Data</title>
+<title>Churchill’s Data Hub – MTN Cheap Data</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
 body {
   font-family: Arial, sans-serif;
-  background: #ffcc00;
+  background: #ffcc00; /* MTN Yellow */
   margin: 0;
+  padding: 0;
 }
 
 .container {
-  max-width: 650px;
+  max-width: 600px;
   margin: auto;
-  background: #fff;
+  background: #fffbea;
   padding: 20px;
 }
 
 h1 {
   text-align: center;
+  color: #000;
 }
 
 .notice {
@@ -32,54 +34,20 @@ h1 {
   line-height: 1.6;
 }
 
-.bundles {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 12px;
-}
-
-.bundle {
-  border: 2px solid #ddd;
-  padding: 15px;
-  position: relative;
-  cursor: pointer;
-  text-align: center;
+label {
   font-weight: bold;
 }
 
-.bundle.active {
-  border-color: #ffcc00;
-  background: #fff8d6;
-}
-
-.badge {
-  position: absolute;
-  top: -8px;
-  right: -8px;
-  padding: 4px 8px;
-  font-size: 12px;
-  color: #fff;
-  border-radius: 4px;
-}
-
-.hot {
-  background: orange;
-}
-
-.family {
-  background: red;
-}
-
-input, button {
+select, input, button {
   width: 100%;
   padding: 12px;
-  margin-top: 12px;
+  margin-top: 10px;
   font-size: 16px;
 }
 
 button {
   background: #ffcc00;
-  border: none;
+  border: 2px solid #000;
   font-weight: bold;
   cursor: pointer;
 }
@@ -88,24 +56,24 @@ button:hover {
   background: #e6b800;
 }
 
-/* Floating WhatsApp */
-#whatsapp-float {
+/* Floating WhatsApp Icon */
+.whatsapp-float {
   position: fixed;
   bottom: 20px;
   right: 20px;
+  width: 60px;
+  height: 60px;
   background: #25D366;
-  color: #fff;
-  padding: 12px 16px;
-  border-radius: 30px;
+  border-radius: 50%;
   display: flex;
   align-items: center;
-  gap: 8px;
-  cursor: pointer;
-  z-index: 999;
+  justify-content: center;
+  z-index: 1000;
 }
 
-#whatsapp-text {
-  font-size: 14px;
+.whatsapp-float img {
+  width: 35px;
+  height: 35px;
 }
 </style>
 </head>
@@ -116,50 +84,44 @@ button:hover {
   <h1>Churchill’s Data Hub</h1>
 
   <div class="notice">
-    <strong>Trusted by MTN users across Ghana</strong><br><br>
+    ✅ <strong>Trusted by MTN users across Ghana</strong><br><br>
+
     📌 Manual delivery handled by a real vendor<br>
     ⏱ Average delivery time: <strong>5–14 minutes</strong><br>
-    ⚠ If delivery exceeds 1 hour, contact us<br><br>
-    🕖 Working Hours: <strong>7:00 AM – 10:00 PM</strong><br>
-    Orders after 10 PM will be delivered the next day.<br><br>
+    ⚠ If delivery exceeds 1 hour, contact us immediately<br><br>
+
+    🕖 Operating Hours: <strong>7:00 AM – 10:00 PM</strong><br>
+    Orders placed before 10 PM are delivered same day.<br>
+    Orders after 10 PM are delivered the next day.<br><br>
+
     🧠 <strong>First-time buyer?</strong><br>
-    Please contact us on WhatsApp before payment.
+    Please contact us on WhatsApp before making payment.
   </div>
 
-  <h3>Select Data Bundle</h3>
-
-  <div class="bundles">
-    <div class="bundle active" data-bundle="1GB – GH₵5 (Test Our Service)">
-      <span class="badge hot">🔥 HOT</span>
-      1GB<br>GH₵5<br><small>Test Our Service</small>
-    </div>
-
-    <div class="bundle" data-bundle="2GB – GH₵9.50">
-      2GB<br>GH₵9.50
-    </div>
-
-    <div class="bundle" data-bundle="3GB – GH₵14.50">
-      <span class="badge hot">🔥 HOT</span>
-      3GB<br>GH₵14.50
-    </div>
-
-    <div class="bundle" data-bundle="4GB – GH₵19.50">
-      4GB<br>GH₵19.50
-    </div>
-
-    <div class="bundle" data-bundle="5GB – GH₵24.50">
-      5GB<br>GH₵24.50
-    </div>
-
-    <div class="bundle" data-bundle="10GB – GH₵45">
-      10GB<br>GH₵45
-    </div>
-
-    <div class="bundle" data-bundle="50GB – GH₵200">
-      <span class="badge family">FAMILY PACKAGE</span>
-      50GB<br>GH₵200
-    </div>
-  </div>
+  <label>Select MTN Data Bundle</label>
+  <select id="bundle">
+    <option value="1GB – GH₵5 🔥 HOT (Test Our Service)">
+      1GB – GH₵5 🔥 HOT (Test Our Service)
+    </option>
+    <option value="2GB – GH₵9.50">
+      2GB – GH₵9.50
+    </option>
+    <option value="3GB – GH₵14.50 🔥 HOT">
+      3GB – GH₵14.50 🔥 HOT
+    </option>
+    <option value="4GB – GH₵19.50">
+      4GB – GH₵19.50
+    </option>
+    <option value="5GB – GH₵24.50">
+      5GB – GH₵24.50
+    </option>
+    <option value="10GB – GH₵45">
+      10GB – GH₵45
+    </option>
+    <option value="50GB – GH₵200 🔴 FAMILY PACKAGE">
+      50GB – GH₵200 🔴 FAMILY PACKAGE
+    </option>
+  </select>
 
   <input type="tel" id="payer" placeholder="Your MoMo Number">
   <input type="tel" id="receiver" placeholder="Data Delivery Number">
@@ -167,32 +129,14 @@ button:hover {
   <button onclick="processOrder()">I’ve Paid – Continue</button>
 </div>
 
-<!-- Floating WhatsApp -->
-<div id="whatsapp-float" onclick="openSupport()">
-  <span id="whatsapp-text">Need help? Contact support</span>
-</div>
+<!-- Floating WhatsApp Button -->
+<a class="whatsapp-float" href="https://wa.me/233530083785" target="_blank">
+  <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp">
+</a>
 
 <script>
-let selectedBundle = "1GB – GH₵5 (Test Our Service)";
-const supportNumber = "0530083785";
-
-document.querySelectorAll(".bundle").forEach(b => {
-  b.addEventListener("click", () => {
-    document.querySelectorAll(".bundle").forEach(x => x.classList.remove("active"));
-    b.classList.add("active");
-    selectedBundle = b.dataset.bundle;
-  });
-});
-
-setTimeout(() => {
-  document.getElementById("whatsapp-text").style.display = "none";
-}, 5000);
-
-function openSupport() {
-  window.open("https://wa.me/233530083785", "_blank");
-}
-
 function processOrder() {
+  const bundle = document.getElementById("bundle").value;
   const payer = document.getElementById("payer").value;
   const receiver = document.getElementById("receiver").value;
 
@@ -207,7 +151,7 @@ function processOrder() {
 `Hello Churchill’s Data Hub,
 I have made payment.
 
-Bundle: ${selectedBundle}
+Bundle: ${bundle}
 MoMo Number: ${payer}
 Delivery Number: ${receiver}
 Order ID: ${orderId}`;
