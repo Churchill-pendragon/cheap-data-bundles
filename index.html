@@ -91,11 +91,19 @@ button{
   font-size:16px;
   font-weight:bold;
   cursor:pointer;
+  animation: pulse 1.5s infinite;
 }
 
 button:disabled{
   background:#ccc;
   cursor:not-allowed;
+  animation:none;
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
 }
 
 .footer{
@@ -222,6 +230,20 @@ After payment, contact us using the same number.
 <button id="b50" disabled onclick="buy('50GB','n50')">Buy Now</button>
 </div>
 
+<!-- BUSINESS BOOST SECTION -->
+<section style="text-align:center; padding:40px 20px;">
+  <h2>Why Choose Churchill's Data Hub?</h2>
+  <p id="status" style="font-weight:bold; font-size:18px; margin-top:10px;"></p>
+  <h3>✅ Trusted by 100+ MTN Users Across Ghana</h3>
+  <h3>🔥 Today's Orders: <span id="orders"></span></h3>
+
+  <div style="margin-top:30px;">
+    <p>⭐ "Fast delivery! Got my bundle in less than 2 minutes!" – Kelvin</p>
+    <p>⭐ "Very affordable and legit. I always buy here." – Ama</p>
+    <p>⭐ "Best data plug in Ghana right now 🔥" – Kojo</p>
+  </div>
+</section>
+
 </div>
 
 <div class="footer">© 2026 Churchill</div>
@@ -250,7 +272,31 @@ Order ID: ${ref}`;
   window.location.href =
   "https://wa.me/233530083785?text="+encodeURIComponent(msg);
 }
+
+/* RANDOM TODAY ORDERS (20 - 70) */
+document.getElementById("orders").innerText =
+  Math.floor(Math.random() * 51) + 20;
+
+/* GHANA TIME STATUS (6:00am - 11:50pm) */
+const now = new Date();
+const ghanaTime = new Date(now.toLocaleString("en-US", { timeZone: "Africa/Accra" }));
+const hour = ghanaTime.getHours();
+const minute = ghanaTime.getMinutes();
+
+if (
+  (hour > 6 && hour < 23) ||
+  (hour === 6) ||
+  (hour === 23 && minute <= 50)
+) {
+  document.getElementById("status").innerHTML =
+    "🟢 We are OPEN (6:00am - 11:50pm)";
+  document.getElementById("status").style.color = "green";
+} else {
+  document.getElementById("status").innerHTML =
+    "🔴 We are CLOSED (Opens 6:00am)";
+  document.getElementById("status").style.color = "red";
+}
 </script>
 
 </body>
-</html>
+                   </html>
