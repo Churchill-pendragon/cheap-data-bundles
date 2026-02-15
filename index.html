@@ -56,11 +56,23 @@ body{
   align-items:center;
 }
 
-.card img{
-  width:30px;
+.logo{
+  width:40px;
   height:30px;
+  border-radius:4px;
+  text-align:center;
+  line-height:30px;
+  font-weight:bold;
+  font-size:12px;
+  color:white;
   margin-right:10px;
+  flex-shrink:0;
 }
+
+/* Network colors */
+.mtn { background:#ffcc00; color:#000; }
+.telecel { background:#ff0000; color:#fff; }
+.at { background: linear-gradient(45deg, #ff0000, #0072bc); color:#fff; }
 
 .price{
   color:#ff9900;
@@ -225,9 +237,9 @@ const dataPackages = {
 };
 
 const networkLogos = {
-  MTN:"https://upload.wikimedia.org/wikipedia/commons/6/64/MTN_logo.svg",
-  Telecel:"https://upload.wikimedia.org/wikipedia/commons/f/f0/Telecel_logo.svg",
-  AT:"https://upload.wikimedia.org/wikipedia/commons/2/2a/Airtel_logo.svg"
+  MTN:"mtn",
+  Telecel:"telecel",
+  AT:"at"
 };
 
 // Toggle button
@@ -284,7 +296,7 @@ function renderPackages(){
 
   networksToShow.forEach(network=>{
     let packages = dataPackages[network];
-    // If All selected, show only first package (hot) for each
+    // If All selected, show only first hot package for each
     if(selected=="All"){
       packages = packages.filter(p=>p.hot)[0] ? [packages.filter(p=>p.hot)[0]] : [packages[0]];
     }
@@ -295,7 +307,7 @@ function renderPackages(){
       const card = document.createElement("div");
       card.className="card";
       card.innerHTML=`
-        <img src="${networkLogos[network]}" alt="${network}">
+        <div class="logo ${networkLogos[network]}">${network}</div>
         <div>
           <b>${network} ${pkg.name} Data</b> ${badgeHTML}<br>
           <div class="price">GH₵ ${pkg.price.toFixed(2)}</div>
