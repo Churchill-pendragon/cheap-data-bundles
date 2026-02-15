@@ -13,12 +13,17 @@ body{
 }
 
 .header{
-  background:#ffcc00;
   text-align:center;
   padding:18px;
   font-size:22px;
   font-weight:bold;
+  color:white;
 }
+
+/* Network colors */
+.header.mtn{background:#ffcc00; color:#000;}
+.header.telecel{background:#d40000; color:#fff;}
+.header.at{background:#0072bc; color:#fff;}
 
 .container{
   max-width:480px;
@@ -129,12 +134,24 @@ button:disabled{
 .whatsapp img{
   width:34px;
 }
+
+.network-option{
+  display:flex;
+  align-items:center;
+}
+
+.network-option img{
+  width:20px;
+  height:20px;
+  margin-right:5px;
+}
 </style>
 </head>
 
 <body>
 
-<div class="header">📶 Churchill’s Data Hub</div>
+<!-- Header -->
+<div id="header" class="header mtn">📶 Churchill’s Data Hub</div>
 
 <div class="container">
 
@@ -168,10 +185,11 @@ After payment, contact us using the same number.
 <div class="alert">⚠ SEND MONEY FIRST BEFORE CLICKING BUY</div>
 
 <!-- SELECT NETWORK -->
+<label for="networkSelect"><b>Select Network</b></label>
 <select id="networkSelect" onchange="renderPackages()">
-  <option value="MTN">MTN</option>
-  <option value="Telecel">Telecel</option>
-  <option value="AT">AT Data</option>
+  <option value="MTN">📶 MTN</option>
+  <option value="Telecel">📶 Telecel</option>
+  <option value="AT">📶 AT Data</option>
 </select>
 
 <!-- DATA PACKAGES CONTAINER -->
@@ -186,7 +204,6 @@ After payment, contact us using the same number.
 </a>
 
 <script>
-/* NETWORK DATA */
 const dataPackages = {
   MTN: [
     {name:'1GB', price:5, hot:true},
@@ -219,31 +236,41 @@ const dataPackages = {
   ]
 };
 
-/* RENDER PACKAGES */
+const networkColors = {
+  MTN:"#ffcc00",
+  Telecel:"#d40000",
+  AT:"#0072bc"
+};
+
 function renderPackages(){
   const network = document.getElementById("networkSelect").value;
   const container = document.getElementById("packages");
   container.innerHTML = "";
+  
+  // Change header color
+  const header = document.getElementById("header");
+  header.style.background = networkColors[network];
+  header.style.color = (network=="MTN")?"#000":"#fff";
 
-  dataPackages[network].forEach((pkg, index)=>{
-    const card = document.createElement("div");
-    card.className = "card";
+  // Only show first package of each network on homepage
+  const firstPkg = dataPackages[network][0];
+  const card = document.createElement("div");
+  card.className = "card";
 
-    let badgeHTML = "";
-    if(pkg.hot) badgeHTML = `<span class="badge hot">🔥 HOT</span>`;
-    if(pkg.family) badgeHTML = `<span class="badge family">FAMILY PACKAGE</span>`;
+  let badgeHTML = "";
+  if(firstPkg.hot) badgeHTML = `<span class="badge hot">🔥 HOT</span>`;
+  if(firstPkg.family) badgeHTML = `<span class="badge family">FAMILY PACKAGE</span>`;
 
-    card.innerHTML = `
-      <b>${pkg.name} Data</b> ${badgeHTML}<br>
-      <div class="price">GH₵ ${pkg.price.toFixed(2)}</div>
-      <input type="tel" placeholder="Enter Number" id="num_${network}_${index}">
-      <div class="check">
-        <input type="checkbox" id="chk_${network}_${index}" onchange="toggleButton('${network}_${index}')"> I have sent payment
-      </div>
-      <button id="btn_${network}_${index}" disabled onclick="buyData('${network}','${pkg.name}','num_${network}_${index}')">Buy Now</button>
-    `;
-    container.appendChild(card);
-  });
+  card.innerHTML = `
+    <b>${firstPkg.name} Data</b> ${badgeHTML}<br>
+    <div class="price">GH₵ ${firstPkg.price.toFixed(2)}</div>
+    <input type="tel" placeholder="Enter Number" id="num_${network}_0">
+    <div class="check">
+      <input type="checkbox" id="chk_${network}_0" onchange="toggleButton('${network}_0')"> I have sent payment
+    </div>
+    <button id="btn_${network}_0" disabled onclick="buyData('${network}','${firstPkg.name}','num_${network}_0')">Buy Now</button>
+  `;
+  container.appendChild(card);
 }
 
 /* TOGGLE BUTTON */
@@ -252,10 +279,24 @@ function toggleButton(id){
     !document.getElementById("chk_" + id).checked;
 }
 
-/* BUY DATA FUNCTION */
+/* BUY DATA FUNCTION WITH VALIDATION */
 function buyData(network,pkg,inputId){
   const num = document.getElementById(inputId).value;
   if(!num){ alert("Enter Number"); return; }
+
+  // Validate Telecel and AT numbers
+  const telecelPattern = /^(020|050)\d{7}$/;
+  const atPattern = /^(026|027|056|057)\d{7}$/;
+
+  if(network=="Telecel" && !telecelPattern.test(num)){
+    alert("Please input a correct Telecel number (020xxxxxxx / 050xxxxxxx)");
+    return;
+  }
+
+  if(network=="AT" && !atPattern.test(num)){
+    alert("Please input a correct AT number (026/027/056/057xxxxxxx)");
+    return;
+  }
 
   const ref = "CDH" + Math.floor(Math.random()*100000);
 
@@ -302,7 +343,6 @@ if (
 
 // Initial render
 renderPackages();
-
 </script>
 
 </body>
