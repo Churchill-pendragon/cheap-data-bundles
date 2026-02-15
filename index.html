@@ -9,7 +9,8 @@
 body{
   margin:0;
   font-family:Arial, sans-serif;
-  background:#fff4cc;
+  background: linear-gradient(135deg, #ffcc00, #0072bc, #d40000);
+  min-height:100vh;
 }
 
 .header{
@@ -19,11 +20,6 @@ body{
   font-weight:bold;
   color:white;
 }
-
-/* Network colors */
-.header.mtn{background:#ffcc00; color:#000;}
-.header.telecel{background:#d40000; color:#fff;}
-.header.at{background:#0072bc; color:#fff;}
 
 .container{
   max-width:480px;
@@ -56,6 +52,14 @@ body{
   padding:15px;
   border-radius:10px;
   box-shadow:0 0 5px rgba(0,0,0,0.15);
+  display:flex;
+  align-items:center;
+}
+
+.card img{
+  width:30px;
+  height:30px;
+  margin-right:10px;
 }
 
 .price{
@@ -117,7 +121,6 @@ button:disabled{
   margin:20px 0;
 }
 
-/* WhatsApp Floating */
 .whatsapp{
   position:fixed;
   bottom:20px;
@@ -134,24 +137,12 @@ button:disabled{
 .whatsapp img{
   width:34px;
 }
-
-.network-option{
-  display:flex;
-  align-items:center;
-}
-
-.network-option img{
-  width:20px;
-  height:20px;
-  margin-right:5px;
-}
 </style>
 </head>
 
 <body>
 
-<!-- Header -->
-<div id="header" class="header mtn">📶 Churchill’s Data Hub</div>
+<div class="header">📶 Churchill’s Data Hub</div>
 
 <div class="container">
 
@@ -175,11 +166,7 @@ After payment, contact us using the same number.
   <h3>✅ Trusted by 100+ Users Across Ghana</h3>
   <h3>🔥 Today's Orders: <span id="orders"></span></h3>
 
-  <div style="margin-top:20px;">
-    <p>⭐ "Fast delivery! Got my bundle in less than 2 minutes!" – Kelvin</p>
-    <p>⭐ "Very affordable and legit. I always buy here." – Ama</p>
-    <p>⭐ "Best data plug in Ghana right now 🔥" – Kojo</p>
-  </div>
+  <div id="testimonials" style="margin-top:20px;"></div>
 </section>
 
 <div class="alert">⚠ SEND MONEY FIRST BEFORE CLICKING BUY</div>
@@ -187,9 +174,10 @@ After payment, contact us using the same number.
 <!-- SELECT NETWORK -->
 <label for="networkSelect"><b>Select Network</b></label>
 <select id="networkSelect" onchange="renderPackages()">
-  <option value="MTN">📶 MTN</option>
-  <option value="Telecel">📶 Telecel</option>
-  <option value="AT">📶 AT Data</option>
+  <option value="All">All</option>
+  <option value="MTN">MTN</option>
+  <option value="Telecel">Telecel</option>
+  <option value="AT">AT Data</option>
 </select>
 
 <!-- DATA PACKAGES CONTAINER -->
@@ -236,50 +224,19 @@ const dataPackages = {
   ]
 };
 
-const networkColors = {
-  MTN:"#ffcc00",
-  Telecel:"#d40000",
-  AT:"#0072bc"
+const networkLogos = {
+  MTN:"https://upload.wikimedia.org/wikipedia/commons/6/64/MTN_logo.svg",
+  Telecel:"https://upload.wikimedia.org/wikipedia/commons/f/f0/Telecel_logo.svg",
+  AT:"https://upload.wikimedia.org/wikipedia/commons/2/2a/Airtel_logo.svg"
 };
 
-function renderPackages(){
-  const network = document.getElementById("networkSelect").value;
-  const container = document.getElementById("packages");
-  container.innerHTML = "";
-  
-  // Change header color
-  const header = document.getElementById("header");
-  header.style.background = networkColors[network];
-  header.style.color = (network=="MTN")?"#000":"#fff";
-
-  // Only show first package of each network on homepage
-  const firstPkg = dataPackages[network][0];
-  const card = document.createElement("div");
-  card.className = "card";
-
-  let badgeHTML = "";
-  if(firstPkg.hot) badgeHTML = `<span class="badge hot">🔥 HOT</span>`;
-  if(firstPkg.family) badgeHTML = `<span class="badge family">FAMILY PACKAGE</span>`;
-
-  card.innerHTML = `
-    <b>${firstPkg.name} Data</b> ${badgeHTML}<br>
-    <div class="price">GH₵ ${firstPkg.price.toFixed(2)}</div>
-    <input type="tel" placeholder="Enter Number" id="num_${network}_0">
-    <div class="check">
-      <input type="checkbox" id="chk_${network}_0" onchange="toggleButton('${network}_0')"> I have sent payment
-    </div>
-    <button id="btn_${network}_0" disabled onclick="buyData('${network}','${firstPkg.name}','num_${network}_0')">Buy Now</button>
-  `;
-  container.appendChild(card);
-}
-
-/* TOGGLE BUTTON */
+// Toggle button
 function toggleButton(id){
   document.getElementById("btn_" + id).disabled =
     !document.getElementById("chk_" + id).checked;
 }
 
-/* BUY DATA FUNCTION WITH VALIDATION */
+// Buy function
 function buyData(network,pkg,inputId){
   const num = document.getElementById(inputId).value;
   if(!num){ alert("Enter Number"); return; }
@@ -317,33 +274,80 @@ Order ID: ${ref}`;
   window.location.href = "https://wa.me/233530083785?text=" + encodeURIComponent(msg);
 }
 
-/* RANDOM TODAY ORDERS (20 - 70) */
-document.getElementById("orders").innerText =
-  Math.floor(Math.random() * 51) + 20;
+// Render packages
+function renderPackages(){
+  const selected = document.getElementById("networkSelect").value;
+  const container = document.getElementById("packages");
+  container.innerHTML = "";
 
-/* GHANA TIME STATUS (6:00am - 11:50pm) */
+  const networksToShow = (selected=="All") ? ["MTN","Telecel","AT"] : [selected];
+
+  networksToShow.forEach(network=>{
+    let packages = dataPackages[network];
+    // If All selected, show only first package (hot) for each
+    if(selected=="All"){
+      packages = packages.filter(p=>p.hot)[0] ? [packages.filter(p=>p.hot)[0]] : [packages[0]];
+    }
+    packages.forEach((pkg,i)=>{
+      let badgeHTML="";
+      if(pkg.hot) badgeHTML=`<span class="badge hot">🔥 HOT</span>`;
+      if(pkg.family) badgeHTML=`<span class="badge family">FAMILY PACKAGE</span>`;
+      const card = document.createElement("div");
+      card.className="card";
+      card.innerHTML=`
+        <img src="${networkLogos[network]}" alt="${network}">
+        <div>
+          <b>${network} ${pkg.name} Data</b> ${badgeHTML}<br>
+          <div class="price">GH₵ ${pkg.price.toFixed(2)}</div>
+          <input type="tel" placeholder="Enter Number" id="num_${network}_${i}">
+          <div class="check">
+            <input type="checkbox" id="chk_${network}_${i}" onchange="toggleButton('${network}_${i}')"> I have sent payment
+          </div>
+          <button id="btn_${network}_${i}" disabled onclick="buyData('${network}','${pkg.name}','num_${network}_${i}')">Buy Now</button>
+        </div>
+      `;
+      container.appendChild(card);
+    });
+  });
+}
+
+// Random orders
+document.getElementById("orders").innerText = Math.floor(Math.random() * 51) + 20;
+
+// Open/close status
 const now = new Date();
 const ghanaTime = new Date(now.toLocaleString("en-US", { timeZone: "Africa/Accra" }));
 const hour = ghanaTime.getHours();
 const minute = ghanaTime.getMinutes();
 
-if (
-  (hour > 6 && hour < 23) ||
-  (hour === 6) ||
-  (hour === 23 && minute <= 50)
-) {
-  document.getElementById("status").innerHTML =
-    "🟢 We are OPEN (6:00am - 11:50pm)";
-  document.getElementById("status").style.color = "green";
-} else {
-  document.getElementById("status").innerHTML =
-    "🔴 We are CLOSED (Opens 6:00am)";
-  document.getElementById("status").style.color = "red";
+if ((hour > 6 && hour < 23) || (hour===6) || (hour===23 && minute <=50)){
+  document.getElementById("status").innerHTML="🟢 We are OPEN (6:00am - 11:50pm)";
+  document.getElementById("status").style.color="green";
+}else{
+  document.getElementById("status").innerHTML="🔴 We are CLOSED (Opens 6:00am)";
+  document.getElementById("status").style.color="red";
 }
+
+// Random testimonials
+const testimonialsList=[
+  {name:"Kelvin", text:"Fast delivery! Got my bundle in less than 2 minutes!"},
+  {name:"Ama", text:"Very affordable and legit. I always buy here."},
+  {name:"Kojo", text:"Best data plug in Ghana right now 🔥"},
+  {name:"Efua", text:"Reliable and cheap bundles."},
+  {name:"Kwame", text:"Quick and trustworthy service."}
+];
+function renderTestimonials(){
+  const container = document.getElementById("testimonials");
+  container.innerHTML="";
+  for(let i=0;i<3;i++){
+    const t = testimonialsList[Math.floor(Math.random()*testimonialsList.length)];
+    container.innerHTML+=`<p>⭐ "${t.text}" – ${t.name}</p>`;
+  }
+}
+renderTestimonials();
 
 // Initial render
 renderPackages();
 </script>
-
 </body>
 </html>
