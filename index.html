@@ -70,7 +70,7 @@ body{
 .hot{background:orange;}
 .family{background:red;}
 
-input{
+input, select{
   width:100%;
   padding:10px;
   margin-top:10px;
@@ -134,14 +134,13 @@ button:disabled{
 
 <body>
 
-<div class="header">📶 Churchill’s Data Hub (MTN)</div>
+<div class="header">📶 Churchill’s Data Hub</div>
 
 <div class="container">
 
 <!-- MAIN INFO -->
 <div class="info">
-📱 <b>Network:</b> MTN ONLY<br>
-💰 <b>Mobile Money / WhatsApp:</b> 0530083785<br>
+📱 <b>Mobile Money / WhatsApp:</b> 0530083785<br>
 👤 <b>Name:</b> Stephen Morken<br>
 ⏱ <b>Delivery time:</b> 5 – 40 minutes<br>
 ⚠ <b>If delivery exceeds 1 hour, contact us immediately.</b><br><br>
@@ -156,7 +155,7 @@ After payment, contact us using the same number.
 <section style="text-align:center; padding:30px 20px;">
   <h2>Why Choose Churchill's Data Hub?</h2>
   <p id="status" style="font-weight:bold; font-size:18px; margin-top:10px;"></p>
-  <h3>✅ Trusted by 100+ MTN Users Across Ghana</h3>
+  <h3>✅ Trusted by 100+ Users Across Ghana</h3>
   <h3>🔥 Today's Orders: <span id="orders"></span></h3>
 
   <div style="margin-top:20px;">
@@ -168,83 +167,15 @@ After payment, contact us using the same number.
 
 <div class="alert">⚠ SEND MONEY FIRST BEFORE CLICKING BUY</div>
 
-<!-- DATA PACKAGES -->
-<!-- 1GB -->
-<div class="card">
-<b>1GB Data</b> <span class="badge hot">🔥 HOT</span><br>
-<div class="price">GH₵ 5.00</div>
-<input type="tel" placeholder="Enter MTN number" id="n1">
-<div class="check">
-<input type="checkbox" id="c1" onchange="toggle(1)"> I have sent payment
-</div>
-<button id="b1" disabled onclick="buy('1GB','n1')">Buy Now</button>
-</div>
+<!-- SELECT NETWORK -->
+<select id="networkSelect" onchange="renderPackages()">
+  <option value="MTN">MTN</option>
+  <option value="Telecel">Telecel</option>
+  <option value="AT">AT Data</option>
+</select>
 
-<!-- 2GB -->
-<div class="card">
-<b>2GB Data</b><br>
-<div class="price">GH₵ 9.50</div>
-<input type="tel" placeholder="Enter MTN number" id="n2">
-<div class="check">
-<input type="checkbox" id="c2" onchange="toggle(2)"> I have sent payment
-</div>
-<button id="b2" disabled onclick="buy('2GB','n2')">Buy Now</button>
-</div>
-
-<!-- 3GB -->
-<div class="card">
-<b>3GB Data</b> <span class="badge hot">🔥 HOT</span><br>
-<div class="price">GH₵ 14.50</div>
-<input type="tel" placeholder="Enter MTN number" id="n3">
-<div class="check">
-<input type="checkbox" id="c3" onchange="toggle(3)"> I have sent payment
-</div>
-<button id="b3" disabled onclick="buy('3GB','n3')">Buy Now</button>
-</div>
-
-<!-- 4GB -->
-<div class="card">
-<b>4GB Data</b><br>
-<div class="price">GH₵ 19.50</div>
-<input type="tel" placeholder="Enter MTN number" id="n4">
-<div class="check">
-<input type="checkbox" id="c4" onchange="toggle(4)"> I have sent payment
-</div>
-<button id="b4" disabled onclick="buy('4GB','n4')">Buy Now</button>
-</div>
-
-<!-- 5GB -->
-<div class="card">
-<b>5GB Data</b><br>
-<div class="price">GH₵ 24.50</div>
-<input type="tel" placeholder="Enter MTN number" id="n5">
-<div class="check">
-<input type="checkbox" id="c5" onchange="toggle(5)"> I have sent payment
-</div>
-<button id="b5" disabled onclick="buy('5GB','n5')">Buy Now</button>
-</div>
-
-<!-- 10GB -->
-<div class="card">
-<b>10GB Data</b><br>
-<div class="price">GH₵ 45.00</div>
-<input type="tel" placeholder="Enter MTN number" id="n10">
-<div class="check">
-<input type="checkbox" id="c10" onchange="toggle(10)"> I have sent payment
-</div>
-<button id="b10" disabled onclick="buy('10GB','n10')">Buy Now</button>
-</div>
-
-<!-- 50GB -->
-<div class="card">
-<b>50GB Data</b> <span class="badge family">FAMILY PACKAGE</span><br>
-<div class="price">GH₵ 200</div>
-<input type="tel" placeholder="Enter MTN number" id="n50">
-<div class="check">
-<input type="checkbox" id="c50" onchange="toggle(50)"> I have sent payment
-</div>
-<button id="b50" disabled onclick="buy('50GB','n50')">Buy Now</button>
-</div>
+<!-- DATA PACKAGES CONTAINER -->
+<div id="packages"></div>
 
 </div>
 
@@ -255,24 +186,94 @@ After payment, contact us using the same number.
 </a>
 
 <script>
-function toggle(id){
-  document.getElementById("b"+id).disabled =
-  !document.getElementById("c"+id).checked;
+/* NETWORK DATA */
+const dataPackages = {
+  MTN: [
+    {name:'1GB', price:5, hot:true},
+    {name:'2GB', price:9.5},
+    {name:'3GB', price:14.5, hot:true},
+    {name:'4GB', price:19.5},
+    {name:'5GB', price:24.5},
+    {name:'10GB', price:45},
+    {name:'50GB', price:200, family:true}
+  ],
+  Telecel: [
+    {name:'5GB', price:25, hot:true},
+    {name:'10GB', price:47},
+    {name:'15GB', price:65},
+    {name:'20GB', price:82},
+    {name:'25GB', price:102},
+    {name:'30GB', price:120},
+    {name:'40GB', price:155},
+    {name:'50GB', price:200}
+  ],
+  AT: [
+    {name:'1GB', price:5},
+    {name:'2GB', price:11, hot:true},
+    {name:'3GB', price:15},
+    {name:'4GB', price:20},
+    {name:'5GB', price:25},
+    {name:'6GB', price:30},
+    {name:'8GB', price:37},
+    {name:'10GB', price:50}
+  ]
+};
+
+/* RENDER PACKAGES */
+function renderPackages(){
+  const network = document.getElementById("networkSelect").value;
+  const container = document.getElementById("packages");
+  container.innerHTML = "";
+
+  dataPackages[network].forEach((pkg, index)=>{
+    const card = document.createElement("div");
+    card.className = "card";
+
+    let badgeHTML = "";
+    if(pkg.hot) badgeHTML = `<span class="badge hot">🔥 HOT</span>`;
+    if(pkg.family) badgeHTML = `<span class="badge family">FAMILY PACKAGE</span>`;
+
+    card.innerHTML = `
+      <b>${pkg.name} Data</b> ${badgeHTML}<br>
+      <div class="price">GH₵ ${pkg.price.toFixed(2)}</div>
+      <input type="tel" placeholder="Enter Number" id="num_${network}_${index}">
+      <div class="check">
+        <input type="checkbox" id="chk_${network}_${index}" onchange="toggleButton('${network}_${index}')"> I have sent payment
+      </div>
+      <button id="btn_${network}_${index}" disabled onclick="buyData('${network}','${pkg.name}','num_${network}_${index}')">Buy Now</button>
+    `;
+    container.appendChild(card);
+  });
 }
 
-function buy(bundle,inputId){
+/* TOGGLE BUTTON */
+function toggleButton(id){
+  document.getElementById("btn_" + id).disabled =
+    !document.getElementById("chk_" + id).checked;
+}
+
+/* BUY DATA FUNCTION */
+function buyData(network,pkg,inputId){
   const num = document.getElementById(inputId).value;
-  if(!num){ alert("Enter MTN number"); return; }
+  if(!num){ alert("Enter Number"); return; }
 
   const ref = "CDH" + Math.floor(Math.random()*100000);
 
-  const msg = `Hello Churchill’s Data Hub,
-I have paid for ${bundle}.
-MTN Number: ${num}
+  let msg = `Hello Churchill’s Data Hub,
+I have paid for ${pkg} on ${network}.
+Number: ${num}
 Order ID: ${ref}`;
 
-  window.location.href =
-  "https://wa.me/233530083785?text="+encodeURIComponent(msg);
+  if(network==="Telecel") msg = `Hello Churchill’s Data Hub,
+I need Telecel data: ${pkg}.
+Number: ${num}
+Order ID: ${ref}`;
+  if(network==="AT") msg = `Hello Churchill’s Data Hub,
+I need AT Data: ${pkg}.
+Number: ${num}
+Order ID: ${ref}`;
+
+  window.location.href = "https://wa.me/233530083785?text=" + encodeURIComponent(msg);
 }
 
 /* RANDOM TODAY ORDERS (20 - 70) */
@@ -298,7 +299,11 @@ if (
     "🔴 We are CLOSED (Opens 6:00am)";
   document.getElementById("status").style.color = "red";
 }
+
+// Initial render
+renderPackages();
+
 </script>
 
 </body>
-  </html>
+</html>
